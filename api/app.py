@@ -48,7 +48,15 @@ def get_complexity(files):
         return "Rate limited"
 
 def print_repo(repo):
-    return f"Repository: {repo['name']}\nOwner: {repo['owner']['login']}\nStars: {repo['stargazers_count']}\nForks: {repo['forks_count']}\nOpen Issues: {repo['open_issues']}\nLanguage: {repo['language']}\n"
+    return (
+    "Repository: " + repo['name'] + "\n" +
+    "Owner: " + repo['owner']['login'] + "\n" +
+    "Stars: " + str(repo['stargazers_count']) + "\n" +
+    "Forks: " + str(repo['forks_count']) + "\n" +
+    "Open Issues: " + str(repo['open_issues']) + "\n" +
+    "Language: " + repo['language'] + "\n"
+     )
+
 
 def get_most_complex(username):
     repos = get_repos(username)
