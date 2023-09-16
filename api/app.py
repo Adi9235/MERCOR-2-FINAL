@@ -14,7 +14,7 @@ def get_repos(username):
 
 def preprocess_code(repo):
     try:
-        response = requests.get(f'{repo["clone_url"]}/archive/master.zip')
+        response = requests.get(repo["clone_url"] + "/archive/master.zip")
         
         code_data = response.content.decode("utf-8")
         code_filename = f'{repo["name"]}.zip'
