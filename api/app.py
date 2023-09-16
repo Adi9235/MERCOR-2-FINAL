@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from Flask import flask, render_template, request
 import os
 import requests
 import openai
