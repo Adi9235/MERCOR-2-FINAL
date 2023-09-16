@@ -17,9 +17,9 @@ def preprocess_code(repo):
         response = requests.get(repo["clone_url"] + "/archive/master.zip")
         
         code_data = response.content.decode("utf-8")
-        code_filename = f'{repo["name"]}.zip'
-        localStorage_key = f'code_{repo["name"]}'
-        localStorage_key_filename = f'filename_{repo["name"]}'
+        code_filename = repo["name"] + ".zip"
+        localStorage_key = "code_" + repo["name"]
+        localStorage_key_filename = "filename_" + repo["name"]
         
         if not hasattr(app, 'localStorage'):
             app.localStorage = {}
