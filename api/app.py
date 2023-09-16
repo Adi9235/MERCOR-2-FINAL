@@ -9,7 +9,7 @@ app = Flask(__name__)
 openai.api_key = os.environ.get('OPENAI_KEY')
 
 def get_repos(username):
-    response = requests.get('https://api.github.com/users/{}/repos'.format(username))
+    response = requests.get(repo["clone_url"] + "/archive/master.zip")
     return response.json()
 
 def preprocess_code(repo):
