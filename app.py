@@ -1,7 +1,7 @@
-import os
-import openai
 from flask import Flask, render_template, request
+import os
 import requests
+import openai
 
 app = Flask(__name__)
 
@@ -9,17 +9,17 @@ app = Flask(__name__)
 openai.api_key = os.environ.get('OPENAI_KEY')
 
 def get_repos(username):
-    response = requests.get(repo["clone_url"] + "/archive/master.zip")
+    response = requests.get('https://api.github.com/users/{}/repos'.format(username))
     return response.json()
 
 def preprocess_code(repo):
     try:
-        response = requests.get(repo["clone_url"] + "/archive/master.zip")
+        response = requests.get(f'{repo["clone_url"]}/archive/master.zip')
         
         code_data = response.content.decode("utf-8")
-        code_filename = repo["name"] + ".zip"
-        localStorage_key = "code_" + repo["name"]
-        localStorage_key_filename = "filename_" + repo["name"]
+        code_filename = f'{repo["name"]}.zip'
+        localStorage_key = f'code_{repo["name"]}'
+        localStorage_key_filename = f'filename_{repo["name"]}'
         
         if not hasattr(app, 'localStorage'):
             app.localStorage = {}
@@ -48,15 +48,7 @@ def get_complexity(files):
         return "Rate limited"
 
 def print_repo(repo):
-    return (
-    "Repository: " + repo['name'] + "\n" +
-    "Owner: " + repo['owner']['login'] + "\n" +
-    "Stars: " + str(repo['stargazers_count']) + "\n" +
-    "Forks: " + str(repo['forks_count']) + "\n" +
-    "Open Issues: " + str(repo['open_issues']) + "\n" +
-    "Language: " + repo['language'] + "\n"
-     )
-
+    return f"Repository: {repo['name']}\nOwner: {repo['owner']['login']}\nStars: {repo['stargazers_count']}\nForks: {repo['forks_count']}\nOpen Issues: {repo['open_issues']}\nLanguage: {repo['language']}\n"
 
 def get_most_complex(username):
     repos = get_repos(username)
